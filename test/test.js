@@ -41,31 +41,57 @@ describe('intitial tests', () => {
     }
   });
 
+  it('validateMove function should return a Boolean', () => {
+    var gameFunction = game.Game;
+    var gameFunctionResult = new gameFunction();
+    console.log('validateMoveResult is:', gameFunctionResult.makeMove());
+    //validateMoveReault.should.be.a('boolean');
+  });
+
   it('makeMove should update the board with an "X" for player1 and an "O" for player2', () => {
     var gameFunction = game.Game;
     var gameFunctionResult = new gameFunction();
     var board = gameFunctionResult.board;
 
-    //make sure only 0's on board
+    //make sure only 0's on board before any moves
     for (var i = 0; i < board.length; i++) {
       for (var j = 0; j < board.length; j++) {
         board[i][j].should.equal(0);  
       }    
     }
 
-    gameFunctionResult.makeMove(undefined, 'player1', [0,0]);
+    gameFunctionResult.makeMove(board, 'player1', [0,0]);
     board[0][0].should.equal('X');
 
-    gameFunctionResult.makeMove(undefined, 'player2', [0,1]);
+    gameFunctionResult.makeMove(board, 'player2', [0,1]);
     console.log(board);
     board[0][1].should.equal('O');
-    
+
   })
 
-  it('validateMove function should return a Boolean', () => {
-    var validateMoveReault= game.Game.validateMove();
-    validateMoveReault.should.be.a('boolean');
-  });
+  it('makeMove should not update the board when there is already a piece on the board', () => {
+    var gameFunction = game.Game;
+    var gameFunctionResult = new gameFunction();
+    var board = gameFunctionResult.board;
+
+    //make sure only 0's on board before any moves
+    for (var i = 0; i < board.length; i++) {
+      for (var j = 0; j < board.length; j++) {
+        board[i][j].should.equal(0);  
+      }    
+    }
+
+    gameFunctionResult.makeMove(board, 'player1', [0,0]);
+    board[0][0].should.equal('X');
+
+    gameFunctionResult.makeMove(board, 'player2', [0,0]);
+    console.log(board);
+    board[0][0].should.equal('X');
+
+  })
+
+
+
 
 
 

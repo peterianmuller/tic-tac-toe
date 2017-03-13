@@ -15,18 +15,7 @@ module.exports = {
 
 
 //add validation functions to ensure that other moves are not allowed
-module.exports.Game.validateMove = function(board, player, move) {
-    
-    var charToCheck;
-
-    //Find out which character to check for
-    
-      // if (player === 'player1') {
-      //   charToCheck = 'O';
-      // } else {
-      //   charToCheck = 'X';
-      // }
-    
+module.exports.Game.prototype.validateMove = function(board, player, move) {
     //iterate over board 
     if (board) {
       // check if piece already exists
@@ -42,12 +31,19 @@ module.exports.Game.validateMove = function(board, player, move) {
 // player1 and player2 both make moves. 
   // Player 1 places 'X' and player 2 places 'O'
 module.exports.Game.prototype.makeMove = function(board, player, move) {
+  
   board = board || new module.exports.Game();
+  
   var piece = player === 'player1' ? 'X' : 'O';
 
-  //need to figure out how to reference validateMove
-  
-  this.board[move[0]][move[1]] = piece;
+
+  // move test case there for test.js ability to run file without move
+  if (move) {
+    //run validation check to ensure that space is note occupied by another piece
+    if(module.exports.Game.prototype.validateMove(board,player,move)) {
+      this.board[move[0]][move[1]] = piece;
+    } 
+  }
    
   return this.board;
 };
